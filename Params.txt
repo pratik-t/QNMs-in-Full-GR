@@ -1,0 +1,8 @@
+.TRUE.  ! IS_PE 
+.TRUE.  ! IS_MEV 
+.TRUE.  ! IS_STOP 
+.TRUE.  ! IS_TIDE 
+.TRUE.  ! IS_COWL 
+.FALSE.  ! IS_GRG 
+.TRUE.  ! IS_GRF 
+.TRUE.  ! IS_GRP1 
