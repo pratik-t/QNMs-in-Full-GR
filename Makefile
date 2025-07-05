@@ -3,7 +3,7 @@
 #————————————————————————————————————————————————————————————————————————————
 
 FC       := gfortran
-SRC_DIR  := .
+SRC_DIR  := SRC
 OBJDIR   := BUILD
 MATHDIR  := MATH
 
@@ -12,11 +12,11 @@ FFLAGS_MAIN := $(FFLAGS) -Wall -I$(OBJDIR) -J$(OBJDIR)
 FFLAGS_MATH := $(FFLAGS) -w -I$(MATHDIR) -J$(MATHDIR)
 
 # Modules in correct order of dependencies
-MODULE_SRCS := IO.f90 TOV.f90 Cowling.f90 FullGR.f90
-PROGRAM_SRCS := Main.f90
+MODULE_SRCS := $(SRC_DIR)/IO.f90 $(SRC_DIR)/TOV.f90 $(SRC_DIR)/Cowling.f90 $(SRC_DIR)/FullGR.f90
+PROGRAM_SRCS := $(SRC_DIR)/Main.f90
 
-MODULE_OBJS := $(patsubst %.f90,$(OBJDIR)/%.o,$(MODULE_SRCS))
-PROGRAM_OBJS := $(patsubst %.f90,$(OBJDIR)/%.o,$(PROGRAM_SRCS))
+MODULE_OBJS := $(patsubst $(SRC_DIR)/%.f90,$(OBJDIR)/%.o,$(MODULE_SRCS))
+PROGRAM_OBJS := $(patsubst $(SRC_DIR)/%.f90,$(OBJDIR)/%.o,$(PROGRAM_SRCS))
 EXEC := QNMS
 
 # ODEPACK source files (all inside MATH/)
@@ -59,7 +59,7 @@ $(ODEPACK_LIB): $(ODEPACK_OBJS)
 prepare_dirs:
 	@mkdir -p $(OBJDIR)
 
-$(OBJDIR)/%.o: %.f90 | prepare_dirs 
+$(OBJDIR)/%.o: $(SRC_DIR)/%.f90 | prepare_dirs 
 	$(FC) $(FFLAGS_MAIN) -c $< -o $@
 
 $(EXEC): $(MODULE_OBJS) $(PROGRAM_OBJS)

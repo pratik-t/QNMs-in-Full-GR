@@ -1,15 +1,18 @@
-INITIALISING LSODA #################################################################################################################################################
+# Initialising LSODA
 
+```
   subroutine lsoda_initialize(self, f, neq, h0, hmax, hmin, iprint, ixpr, mxstep, mxhnil, mxordn, mxords, jac, jt, g, ng, ml, mu, istate)
+  Initialization
     
   procedure(lsoda_rhs_fcn) :: f 
   Right-hand-side function defining the system of ODEs. See the `lsoda_rhs_fcn` interface for more information.
-  
-  integer, intent(in) :: neq 
+
+  integer, intent(in) :: neq
   Number of ODEs
-
-RHS INTERFACE ######################################################################################################################################################
-
+```
+---
+# RHS Interface
+```
   subroutine lsoda_rhs_fcn(self, neq, t, y, ydot, ierr)
       
       import :: dp, lsoda_class
@@ -33,9 +36,10 @@ RHS INTERFACE ##################################################################
       Set to >= 0 if successful. Set to < 0 to terminate the integration 
 
   end subroutine
-    
-OPTIONAL ###########################################################################################################################################################
-    
+```
+---
+# Optional Arguments
+```
   real(dp), optional, intent(in) :: h0 
   The step size to be attempted on the first step. The default value is determined by the solver.
 
@@ -68,11 +72,13 @@ OPTIONAL #######################################################################
 
   integer, optional, intent(in) :: jt
   Jacobian type indicator: 1 means a user-supplied full (NEQ by NEQ) Jacobian;  2 means an internally generated (difference quotient) full Jacobian (using NEQ extra calls to F per df/dy value);  4 means a user-supplied banded Jacobian. 5 means an internally generated banded Jacobian (using ML+MU+1 extra calls to F per df/dy evaluation).
-
-LSODA INTEGRATE ####################################################################################################################################################
+```
+---
+# LSODA Integrate
 
   Integrates the ODEs forward in time from `t` until `tout`
-  
+
+```
   subroutine lsoda_integrate(self, y, t, tout, rtol, atol, itask, istate)
     
     class(lsoda_class), intent(inout) :: self
@@ -141,9 +147,11 @@ LSODA INTEGRATE ################################################################
     integer :: i
     integer :: itol, ierr
     integer, parameter :: iopt = 1
+```
+---
 
-INTEGRATION INFO ###################################################################################################################################################
-
+# Integration Info
+```
   subroutine lsoda_info(self, h, tcur, tolsf, tsw, nst, nfe, nje, nq, imxer, meth)
 
     class(lsoda_class), intent(inout) :: self
@@ -179,5 +187,5 @@ INTEGRATION INFO ###############################################################
     The method indicator for the current step: 1 means Adams (nonstiff), 2 means BDF (stiff).
 
   end subroutine
-
-####################################################################################################################################################################
+```
+---
